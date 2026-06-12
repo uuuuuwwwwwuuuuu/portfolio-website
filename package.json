@@ -1,0 +1,17 @@
+{
+	"name": "my-website",
+	"version": "1.0.0",
+	"description": "This is my personal website for my portfolio ",
+	"main": "index.js",
+	"scripts": {
+		"web": "pnpm --filter @portfolio/website",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "Denis Voronin",
+	"license": "ISC",
+	"packageManager": "pnpm@10.28.0",
+	"workspaces": [
+		"apps/*"
+	]
+}
