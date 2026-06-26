@@ -1,5 +1,6 @@
 ---
 import '../global.css';
+import { SmoothScroll } from '@components/SmoothScroll/SmoothScroll';
 ---
 
 <!doctype html>
@@ -24,6 +25,7 @@ import '../global.css';
 		<title>Denis Voronin — Junior Frontend Developer</title>
 	</head>
 	<body class="dark">
+        <SmoothScroll client:only="react" />
 		<slot />
 	</body>
 </html>

@@ -1,6 +1,6 @@
 ---
-import VideoComponent from '@components/VideoComponent/VideoComponent';
-import { Button, type ButtonProps } from '@components/Button/Button';
+import { HeroScrollController } from '@components/HeroScrollController/HeroScrollController';
+import type { ButtonProps } from '@components/Button/Button';
 
 interface Props {
 	title: string;
@@ -11,69 +11,4 @@ interface Props {
 const { title, description, buttons } = Astro.props;
 ---
 
-<section class="hero-section">
-	<div class="hero-section__content">
-		<h1 class="hero-section__title font-accent" set:html={title} />
-		<p class="hero-section__description">{description}</p>
-		<div class="hero-section__buttons">
-			{
-				buttons.map((buttonData) => (
-					<Button {...buttonData} className="hero-section__button" />
-				))
-			}
-		</div>
-	</div>
-	<VideoComponent />
-</section>
-
-<style lang="scss">
-	.hero-section {
-		--max-width: 90rem;
-
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		height: 100svh;
-		width: 100%;
-
-		&__content {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-
-			max-width: var(--max-width);
-			gap: 2rem;
-		}
-
-		&__title {
-			font-size: 3.2rem;
-			font-weight: 700;
-			text-align: center;
-			line-height: 1.2;
-		}
-
-		&__description {
-			font-size: 1.6rem;
-			text-align: center;
-			color: var(--color-text-secondary);
-			max-width: 54rem;
-			line-height: 1.2;
-		}
-
-		&__buttons {
-			display: flex;
-			gap: 1rem;
-		}
-
-		.hero-section__button {
-			width: 23rem;
-			padding: 0;
-			font-size: 1.4rem;
-			font-weight: 600;
-			height: 4rem;
-			transition: all 0.3s ease;
-		}
-	}
-</style>
+<HeroScrollController client:load title={title} description={description} buttons={buttons} />
