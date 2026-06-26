@@ -1,0 +1,38 @@
+---
+import '../global.css';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="preload" href="/fonts/BBH_Bartle/BBHBartle-Regular.woff" as="font" type="font/woff" crossorigin />
+		<link rel="preload" href="/fonts/Nunito/Nunito-Black.woff" as="font" type="font/woff" crossorigin />
+		<link rel="preload" href="/fonts/Nunito/Nunito-Bold.woff" as="font" type="font/woff" crossorigin />
+		<link rel="preload" href="/fonts/Nunito/Nunito-ExtraBold.woff" as="font" type="font/woff" crossorigin />
+		<link rel="preload" href="/fonts/Nunito/Nunito-ExtraLight.woff" as="font" type="font/woff" crossorigin />
+		<link rel="preload" href="/fonts/Nunito/Nunito-Light.woff" as="font" type="font/woff" crossorigin />
+		<link rel="preload" href="/fonts/Nunito/Nunito-Medium.woff" as="font" type="font/woff" crossorigin />
+		<link rel="preload" href="/fonts/Nunito/Nunito-Regular.woff" as="font" type="font/woff" crossorigin />
+		<link rel="preload" href="/fonts/Nunito/Nunito-SemiBold.woff" as="font" type="font/woff" crossorigin />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<!-- change logo hero -->
+		<link rel="icon" href="/favicon.ico" />
+		<!-- change logo hero -->
+		<meta name="generator" content={Astro.generator} />
+		<title>Denis Voronin — Junior Frontend Developer</title>
+	</head>
+	<body class="dark">
+		<slot />
+	</body>
+</html>
+<script>
+	import { systemStore } from '../store/systemStore';
+
+	const { body } = document;
+
+	systemStore.subscribe(({ theme }) => {
+		body.classList.replace('dark', theme === 'dark' ? 'dark' : 'light');
+	});
+</script>

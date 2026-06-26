@@ -1,0 +1,31 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 100rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    color: var(--color-text-accent-button);
+}
+
+.primaryFilled {
+    background-color: var(--color-primary);
+
+    &:hover {
+        filter: brightness(1.2);
+        box-shadow: 0 0 0.5rem 0 var(--color-primary);
+    }
+}
+
+.secondaryOutlined {
+    background-color: transparent;
+    border: 1px solid var(--color-text-accent-button);
+
+    &:hover {
+        background-color: var(--color-text-accent-button);
+        color: var(--color-primary);
+    }
+}
