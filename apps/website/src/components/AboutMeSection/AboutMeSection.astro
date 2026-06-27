@@ -1,0 +1,129 @@
+---
+import Picture from 'astro/components/Picture.astro';
+
+interface Props {
+	title: string;
+	image: ImageMetadata;
+	subtitle: string;
+	description: string;
+}
+
+const { title, image, subtitle, description } = Astro.props;
+---
+
+<section class="about-me-section">
+	<h2 set:html={title} />
+	<div class="about-me-section__container">
+		<div class="about-me-section__image">
+			<!-- <Picture
+				src={image}
+				alt={title}
+				format="webp"
+				fallbackFormat="png"
+				widths={[1920, 1280, 960, 640, 320]}
+			/> -->
+			<img src={image.src} alt={title} />
+		</div>
+
+		<div class="about-me-section__content">
+			<h3>{subtitle}</h3>
+			<p set:html={description} />
+		</div>
+	</div>
+</section>
+<style lang="scss">
+	.about-me-section {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		gap: 2rem;
+		padding: 4rem 5rem;
+
+		h2 {
+			font-size: 4.6rem;
+			font-weight: 700;
+			color: var(--color-text-primary);
+			text-align: center;
+			font-family: var(--font-accent);
+		}
+
+		&__image {
+			flex: 0 0 50rem;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			max-height: 65rem;
+			
+            picture,
+			img {
+                width: 100%;
+				height: 100%;
+                object-fit: cover;
+			}
+
+			@media screen and (max-width: 1250px) {
+				flex-basis: 40rem;
+			}
+		}
+
+		&__container {
+			background-color: var(--color-bg-ui);
+			border-radius: 3rem;
+			padding: 3rem 4rem;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 5rem;
+			flex: 1 1 auto;
+			max-height: 75rem;
+			overflow: hidden;
+		}
+
+		&__content {
+			display: flex;
+			flex-direction: column;
+			gap: 2rem;
+			flex: 1 1;
+			min-height: 0;
+			min-width: 0;
+
+			h3 {
+				font-size: 2.4rem;
+				font-weight: 700;
+			}
+
+			p {
+				font-size: 1.6rem;
+				color: var(--color-text-secondary);
+			}
+		}
+
+		@media screen and (max-width: 1250px) {
+			&__image {
+				flex-basis: 40rem;
+			}
+
+			&__container {
+				gap: 2rem;
+			}
+		}
+
+		@media screen and (max-width: 1160px) {
+			&__container {
+				flex-direction: column;
+				align-items: stretch;
+				max-height: none;
+			}
+
+			&__image {
+                aspect-ratio: 4/5;
+
+                img {
+                    object-fit: contain;
+                }
+			}
+		}
+	}
+</style>

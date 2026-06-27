@@ -1,11 +1,21 @@
 ---
 import Layout from '../layouts/DefaultLayout.astro';
 import HeroSection from '../components/HeroSection/HeroSection.astro';
+import AboutMeSection from '../components/AboutMeSection/AboutMeSection.astro';
 
 import mainPage from '@data/mainPage';
 ---
 
 <Layout>
 	<HeroSection {...mainPage.heroSection} />
-	<div style="min-height: 100svh; background-color: var(--color-bg-main);" />
+	<div class="container">
+		<AboutMeSection {...mainPage.aboutMeSection} />
+	</div>
 </Layout>
+
+<style lang="scss">
+	.container {
+		width: 100%;
+		max-width: 144rem;
+	}
+</style>

@@ -6,4 +6,10 @@ export interface MainPage {
         description: string;
         buttons: ButtonProps[];
     };
+    aboutMeSection: {
+        title: string;
+        image: ImageMetadata;
+        subtitle: string;
+        description: string;
+    }
 }
