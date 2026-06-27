@@ -14,6 +14,7 @@ function getFramePath(index: number) {
 	return `${FRAMES_PATH}/${String(index + 1).padStart(4, '0')}.webp`;
 }
 
+/** Draw image on canvas with object-fit: cover behavior */
 function drawCover(
 	ctx: CanvasRenderingContext2D,
 	image: HTMLImageElement,
@@ -49,6 +50,19 @@ export interface HeroScrollControllerProps {
 	buttons: ButtonProps[];
 }
 
+/**
+ * Scroll-driven hero animation.
+ *
+ * Layout (see HeroScrollController.module.scss):
+ *   heroScrollTrack  — tall container (100svh + 200svh extra scroll distance)
+ *   heroSection      — sticky block pinned to viewport while track scrolls
+ *
+ * Flow:
+ *   1. User scrolls → Lenis updates scrollY
+ *   2. scrollY mapped to progress (0 → 1) within the track
+ *   3. progress picks a frame index and fades out text/buttons
+ *   4. When track ends, sticky releases and hero scrolls away naturally
+ */
 export const HeroScrollController: FC<HeroScrollControllerProps> = ({
 	title,
 	description,
@@ -59,7 +73,10 @@ export const HeroScrollController: FC<HeroScrollControllerProps> = ({
 	const canvasContainerRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 	const framesRef = useRef<HTMLImageElement[]>([]);
+
+	// progress: 0 = first frame + visible content, 1 = last frame + hidden content
 	const [progress, setProgress] = useState(0);
+	// Mirror of progress for callbacks that must read the latest value without re-subscribing
 	const progressRef = useRef(0);
 
 	useEffect(() => {
@@ -87,14 +104,16 @@ export const HeroScrollController: FC<HeroScrollControllerProps> = ({
 		drawCover(ctx, image, clientWidth, clientHeight);
 	};
 
+	// React to progress changes: update canvas frame + text opacity
 	useEffect(() => {
 		const content = contentRef.current;
 		if (content) {
-			content.style.opacity = String(1 - progress);
+			content.style.opacity = String(1 - (progress * 4));
 		}
 		drawFrame(progress);
 	}, [progress]);
 
+	// Preload all frames once, then keep canvas sized to the container
 	useEffect(() => {
 		const canvas = canvasRef.current;
 		const container = canvasContainerRef.current;
@@ -104,6 +123,7 @@ export const HeroScrollController: FC<HeroScrollControllerProps> = ({
 			const dpr = window.devicePixelRatio || 1;
 			const { clientWidth, clientHeight } = container;
 
+			// Internal resolution scaled for retina; CSS size stays in layout pixels
 			canvas.width = clientWidth * dpr;
 			canvas.height = clientHeight * dpr;
 			canvas.style.width = `${clientWidth}px`;
@@ -141,6 +161,7 @@ export const HeroScrollController: FC<HeroScrollControllerProps> = ({
 		};
 	}, []);
 
+	// Map page scroll position → progress within the sticky track
 	useEffect(() => {
 		const track = trackRef.current;
 		if (!track) return;
@@ -148,10 +169,13 @@ export const HeroScrollController: FC<HeroScrollControllerProps> = ({
 		const updateProgressFromScroll = () => {
 			const scrollY = scrollStore.getLenis()?.scroll ?? window.scrollY;
 			const trackTop = track.offsetTop;
+			// How many pixels of scroll it takes to go from progress 0 to 1
 			const scrollRange = track.offsetHeight - window.innerHeight;
 
 			if (scrollRange <= 0) return;
 
+			// scrollY at trackTop       → progress 0
+			// scrollY at trackTop + range → progress 1
 			const next = clamp((scrollY - trackTop) / scrollRange, 0, 1);
 			if (next === progressRef.current) return;
 
@@ -172,6 +196,7 @@ export const HeroScrollController: FC<HeroScrollControllerProps> = ({
 			return true;
 		};
 
+		// SmoothScroll may hydrate after this component — poll until Lenis is ready
 		if (!attachLenis()) {
 			const waitForLenis = () => {
 				if (attachLenis()) return;
@@ -180,6 +205,7 @@ export const HeroScrollController: FC<HeroScrollControllerProps> = ({
 			rafId = requestAnimationFrame(waitForLenis);
 		}
 
+		// Fallback when Lenis is disabled (e.g. prefers-reduced-motion)
 		window.addEventListener('scroll', updateProgressFromScroll, { passive: true });
 
 		return () => {
@@ -190,6 +216,7 @@ export const HeroScrollController: FC<HeroScrollControllerProps> = ({
 	}, []);
 
 	return (
+		// Tall scroll area — hero stays pinned inside until this container is fully scrolled
 		<div ref={trackRef} className={styles.heroScrollTrack}>
 			<section className={styles.heroSection}>
 				<div ref={contentRef} className={styles.content}>
