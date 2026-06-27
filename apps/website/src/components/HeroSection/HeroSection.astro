@@ -1,0 +1,14 @@
+---
+import { HeroScrollController } from '@components/HeroScrollController/HeroScrollController';
+import type { ButtonProps } from '@components/Button/Button';
+
+interface Props {
+	title: string;
+	description: string;
+	buttons: ButtonProps[];
+}
+
+const { title, description, buttons } = Astro.props;
+---
+
+<HeroScrollController client:load title={title} description={description} buttons={buttons} />

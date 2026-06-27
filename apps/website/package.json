@@ -12,6 +12,20 @@
 		"astro": "astro"
 	},
 	"dependencies": {
-		"astro": "^6.4.6"
+		"@astrojs/react": "^5.0.7",
+		"@types/react": "^19.2.17",
+		"@types/react-dom": "^19.2.3",
+		"astro": "^6.4.6",
+		"clsx": "^2.1.1",
+		"lenis": "^1.3.25",
+		"react": "^19.2.7",
+		"react-dom": "^19.2.7",
+		"three": "^0.184.0",
+		"zustand": "^5.0.14"
+	},
+	"devDependencies": {
+		"@types/three": "^0.184.1",
+		"sass": "^1.101.0",
+		"typescript": "^6.0.3"
 	}
 }
