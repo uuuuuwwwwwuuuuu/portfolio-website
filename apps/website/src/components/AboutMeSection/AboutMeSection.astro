@@ -15,14 +15,13 @@ const { title, image, subtitle, description } = Astro.props;
 	<h2 set:html={title} />
 	<div class="about-me-section__container">
 		<div class="about-me-section__image">
-			<!-- <Picture
+			<Picture
 				src={image}
 				alt={title}
 				format="webp"
 				fallbackFormat="png"
 				widths={[1920, 1280, 960, 640, 320]}
-			/> -->
-			<img src={image.src} alt={title} />
+			/>
 		</div>
 
 		<div class="about-me-section__content">
@@ -37,7 +36,7 @@ const { title, image, subtitle, description } = Astro.props;
 		flex-direction: column;
 		width: 100%;
 		gap: 2rem;
-		padding: 4rem 5rem;
+		padding: 4rem 0;
 
 		h2 {
 			font-size: 4.6rem;
@@ -101,20 +100,30 @@ const { title, image, subtitle, description } = Astro.props;
 		}
 
 		@media screen and (max-width: 1250px) {
+            h2 {
+                font-size: 3.6rem;
+            }
+
 			&__image {
 				flex-basis: 40rem;
 			}
 
 			&__container {
 				gap: 2rem;
+                padding: 2rem;
 			}
 		}
 
 		@media screen and (max-width: 1160px) {
+            h2 {
+                font-size: 3.2rem;
+            }
+
 			&__container {
 				flex-direction: column;
 				align-items: stretch;
 				max-height: none;
+                padding: 1rem;
 			}
 
 			&__image {
@@ -125,5 +134,11 @@ const { title, image, subtitle, description } = Astro.props;
                 }
 			}
 		}
+
+        @media screen and (max-width: 550px) {
+            h2 {
+                font-size: 2.4rem;
+            }
+        }
 	}
 </style>
