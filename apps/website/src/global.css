@@ -102,6 +102,7 @@ html {
 	height: 100%;
 	-webkit-text-size-adjust: 100%;
 	text-size-adjust: 100%;
+    font-size: 10px;
 }
 
 body {
@@ -113,6 +114,9 @@ body {
 	-moz-osx-font-smoothing: grayscale;
     background-color: var(--color-bg-main);
     color: var(--color-text-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 img,
