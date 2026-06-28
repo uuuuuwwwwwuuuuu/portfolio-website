@@ -1,6 +1,6 @@
 .heroScrollTrack {
 	--hero-scroll-extra: 200svh;
-
+    width: 100%;
 	height: calc(100svh + var(--hero-scroll-extra));
 }
 
@@ -38,6 +38,8 @@
 	align-items: center;
 	max-width: var(--max-width);
 	gap: 2rem;
+
+    padding: 0 5rem;
 }
 
 .title {
@@ -67,4 +69,45 @@
 	font-weight: 600;
 	height: 4rem;
 	transition: all 0.3s ease;
+}
+
+
+@media screen and (max-width: 950px) {
+    .content {
+        padding: 0 2rem;
+        gap: 1rem;
+
+        .title {
+            font-size: 2.4rem;
+        }
+
+        .description {
+            font-size: 1.4rem;
+
+            max-width: 40rem;
+        }
+
+        .buttons {
+            flex-direction: column;
+            width: 100%;
+            max-width: 40rem;
+        }
+
+        .button {
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .content {
+        padding: 0 1rem;
+        .title {
+            font-size: 1.8rem;
+        }
+
+        .description {
+
+        }
+    }
 }
