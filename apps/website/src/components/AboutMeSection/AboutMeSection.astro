@@ -44,6 +44,10 @@ const { title, image, subtitle, description } = Astro.props;
 			color: var(--color-text-primary);
 			text-align: center;
 			font-family: var(--font-accent);
+			opacity: 0;
+			animation: SlideIn linear both;
+			animation-timeline: view();
+			animation-range: entry 10% cover 40%;
 		}
 
 		&__image {
@@ -54,12 +58,12 @@ const { title, image, subtitle, description } = Astro.props;
 			justify-content: center;
 			align-items: center;
 			max-height: 65rem;
-			
-            picture,
+
+			picture,
 			img {
-                width: 100%;
+				width: 100%;
 				height: 100%;
-                object-fit: cover;
+				object-fit: cover;
 			}
 
 			@media screen and (max-width: 1250px) {
@@ -78,6 +82,11 @@ const { title, image, subtitle, description } = Astro.props;
 			flex: 1 1 auto;
 			max-height: 75rem;
 			overflow: hidden;
+
+            opacity: 0;
+			animation: SlideIn linear both;
+			animation-timeline: view();
+			animation-range: entry 10% cover 40%;
 		}
 
 		&__content {
@@ -100,9 +109,9 @@ const { title, image, subtitle, description } = Astro.props;
 		}
 
 		@media screen and (max-width: 1250px) {
-            h2 {
-                font-size: 3.6rem;
-            }
+			h2 {
+				font-size: 3.6rem;
+			}
 
 			&__image {
 				flex-basis: 40rem;
@@ -110,35 +119,46 @@ const { title, image, subtitle, description } = Astro.props;
 
 			&__container {
 				gap: 2rem;
-                padding: 2rem;
+				padding: 2rem;
 			}
 		}
 
 		@media screen and (max-width: 1160px) {
-            h2 {
-                font-size: 3.2rem;
-            }
+			h2 {
+				font-size: 3.2rem;
+			}
 
 			&__container {
 				flex-direction: column;
 				align-items: stretch;
 				max-height: none;
-                padding: 1rem;
+				padding: 1rem;
 			}
 
 			&__image {
-                aspect-ratio: 4/5;
+				aspect-ratio: 4/5;
 
-                img {
-                    object-fit: contain;
-                }
+				img {
+					object-fit: contain;
+				}
 			}
 		}
 
-        @media screen and (max-width: 550px) {
-            h2 {
-                font-size: 2.4rem;
-            }
-        }
+		@media screen and (max-width: 550px) {
+			h2 {
+				font-size: 2.4rem;
+			}
+		}
+	}
+
+	@keyframes SlideIn {
+		from {
+			opacity: 0;
+			transform: translateY(40%);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 </style>
